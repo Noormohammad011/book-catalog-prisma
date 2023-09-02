@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { paginationFields } from '../../../constants/pagination';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
+import { pick } from '../../../shared/utils';
 import { BookService } from './books.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
@@ -49,9 +51,25 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getByCategoryIdFromDB = catchAsync(
+  async (req: Request, res: Response) => {
+    const { categoryId } = req.params;
+    const options = pick(req.query, paginationFields);
+    const result = await BookService.getByCategoryIdFromDB(categoryId, options);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Books with category fetched successfully!',
+      meta: result.meta,
+      data: result.data,
+    });
+  }
+);
+
 export const BookController = {
   insertIntoDB,
   getByIdFromDB,
   updateIntoDB,
   deleteFromDB,
+  getByCategoryIdFromDB,
 };

@@ -22,5 +22,7 @@ router
     BookController.updateIntoDB
   )
   .delete(auth(ENUM_USER_ROLE.ADMIN), BookController.deleteFromDB);
+  
+router.get('/:categoryId/category', BookController.getByCategoryIdFromDB);
 
 export const BookRoute = router;
