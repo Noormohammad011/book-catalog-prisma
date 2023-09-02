@@ -13,6 +13,7 @@ router.post(
   auth(ENUM_USER_ROLE.ADMIN),
   BookController.insertIntoDB
 );
+router.get('/', BookController.getAllFromDB);
 router
   .route('/:id')
   .get(BookController.getByIdFromDB)
@@ -22,7 +23,7 @@ router
     BookController.updateIntoDB
   )
   .delete(auth(ENUM_USER_ROLE.ADMIN), BookController.deleteFromDB);
-  
+
 router.get('/:categoryId/category', BookController.getByCategoryIdFromDB);
 
 export const BookRoute = router;
