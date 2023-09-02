@@ -15,6 +15,18 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await BookService.getByIdFromDB(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book fetched successfully!',
+    data: result,
+  });
+});
+
 export const BookController = {
   insertIntoDB,
+  getByIdFromDB,
 };

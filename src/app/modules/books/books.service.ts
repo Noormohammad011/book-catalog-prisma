@@ -16,6 +16,18 @@ const insertIntoDB = async (data: Book): Promise<Book> => {
   });
 };
 
+const getByIdFromDB = async (id: string): Promise<Book | null> => {
+  return await prisma.book.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      category: true,
+    },
+  });
+};
+
 export const BookService = {
   insertIntoDB,
+  getByIdFromDB,
 };
