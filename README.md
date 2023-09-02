@@ -1,23 +1,39 @@
-# University Management Core Service
+# Build a Book Catalog Backend with Prisma
 
-## Resources
+<hr>
 
-### Stater Repository: 
-[University Management Core Service Starter](https://github.com/Apollo-Level2-Web-Dev/university-management-core-service-starter)
+### Live Link: https://book-catalog-prisma-two.vercel.app
 
-### ER Diagram
-- [Module 35: ER Diagram](https://i.ibb.co/Ln2FttV/university-management-core-service-module-1.png)
+### Application Routes:
 
-- [Module-36: ER Diagram](https://i.ibb.co/tJ4nt6T/Screenshot-2023-08-20-at-7-32-11-PM.png)
+#### User
 
-- [Module-37: ER Diagram](https://i.ibb.co/DV7Jwd8/university-management-core-service-Page-2-drawio.png)
+- api/v1/auth/signup (POST)
+- api/v1/users (GET)
+- api/v1/users/c2aaa628-736b-4784-ad4a-fea709052277 (Single GET) Include an id that is saved in my database
+- api/v1/users/c2aaa628-736b-4784-ad4a-fea709052277 (PATCH)
+- api/v1/users/c2aaa628-736b-4784-ad4a-fea709052277 (DELETE) Include an id that is saved in my database
+- api/v1/profile (GET)
 
-- [Module-38: ER Diagram](https://i.ibb.co/B2JhHD3/module-38.png)
+### Category
 
-- [Module-39: ER Diagram](https://i.ibb.co/VgG8RcZ/university-management-core-service-Page-1-drawio.png)
+- api/v1/categories/create-category (POST)
+- api/v1/categories (GET)
+- api/v1/categories/c6d01007-0ee9-4223-abdd-046a02774ace (Single GET) Include an id that is saved in my database
+- api/v1/categories/c6d01007-0ee9-4223-abdd-046a02774ace (PATCH)
+- api/v1/categories/c6d01007-0ee9-4223-abdd-046a02774ace (DELETE) Include an id that is saved in my database
 
-- **You can generate an ERD with Prisma schema using the website: https://prismaliser.app/**
-- [API Documentation](https://documenter.getpostman.com/view/26694209/2s9Xy5NrFU)
+### Books
 
-"# book-catelog-prisma" 
-"# book-catalog-prisma" 
+- api/v1/books/create-book (POST)
+- api/v1/books (GET)
+- api/v1/books/:categoryId/category (GET)
+- api/v1/books/:id (GET)
+- api/v1/books/:id (PATCH)
+- api/v1/books/:id (DELETE)
+
+### Orders
+
+- api/v1/orders/create-order (POST)
+- api/v1/orders (GET)
+- api/v1/orders/:orderId (GET)
