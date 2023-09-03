@@ -1,6 +1,4 @@
 import { Order, OrderedBook } from '@prisma/client';
-import httpStatus from 'http-status';
-import ApiError from '../../../errors/ApiError';
 import prisma from '../../../shared/prisma';
 
 const insertIntoDB = async (
@@ -46,11 +44,6 @@ const getAllFromDBCustomer = async (userId: string): Promise<Order[]> => {
       orderedBooks: true,
     },
   });
-
-  if (result.length === 0) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'No orders found');
-  }
-
   return result;
 };
 
@@ -68,9 +61,6 @@ const getByIdFromDB = async (
         orderedBooks: true,
       },
     });
-    if (result.length === 0) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'No orders found');
-    }
     return result;
   } else {
     const result = await prisma.order.findMany({
@@ -82,9 +72,6 @@ const getByIdFromDB = async (
         orderedBooks: true,
       },
     });
-    if (result.length === 0) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'No orders found');
-    }
     return result;
   }
 };
