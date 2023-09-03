@@ -1,4 +1,6 @@
 import { Order, OrderedBook } from '@prisma/client';
+import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError';
 import prisma from '../../../shared/prisma';
 
 const insertIntoDB = async (
@@ -35,8 +37,8 @@ const getAllFromDB = async (): Promise<Order[]> => {
   });
 };
 
-const getAllFromDBCustomer = async (userId: string): Promise<Order | null> => {
-  return await prisma.order.findFirst({
+const getAllFromDBCustomer = async (userId: string): Promise<Order[]> => {
+  const result = await prisma.order.findMany({
     where: {
       userId: userId,
     },
@@ -44,15 +46,21 @@ const getAllFromDBCustomer = async (userId: string): Promise<Order | null> => {
       orderedBooks: true,
     },
   });
+
+  if (result.length === 0) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'No orders found');
+  }
+
+  return result;
 };
 
 const getByIdFromDB = async (
   orderId: string,
   role: string,
   userId: string
-): Promise<Order | null> => {
+): Promise<Order[]> => {
   if (role === 'admin') {
-    return await prisma.order.findFirst({
+    const result = await prisma.order.findMany({
       where: {
         id: orderId,
       },
@@ -60,8 +68,12 @@ const getByIdFromDB = async (
         orderedBooks: true,
       },
     });
+    if (result.length === 0) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'No orders found');
+    }
+    return result;
   } else {
-    return await prisma.order.findFirst({
+    const result = await prisma.order.findMany({
       where: {
         id: orderId,
         userId: userId,
@@ -70,6 +82,10 @@ const getByIdFromDB = async (
         orderedBooks: true,
       },
     });
+    if (result.length === 0) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'No orders found');
+    }
+    return result;
   }
 };
 
