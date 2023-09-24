@@ -18,7 +18,7 @@ model User {
   role       UserRole @default(customer)
   contactNo  String   @unique @map("contact_no")
   address    String
-  profileImg String   @map("profile_img")
+  profileImg String?  @map("profile_img")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @default(now()) @updatedAt @map("updated_at")
   orders     Order[]
