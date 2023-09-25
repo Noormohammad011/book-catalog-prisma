@@ -23,10 +23,11 @@ const update = z.object({
       })
       .optional(),
     contactNo: z
-      .string()
-      .refine(value => /^\+880-\d{10}$/.test(value), {
-        message: 'Contact number must be in the format +880-XXXXXXXXXX',
+      .string({
+        required_error: 'Contact Number is required',
       })
+      .min(3)
+      .max(11)
       .optional(),
     address: z.string().min(2).max(100).optional(),
     profileImg: z.string().optional(),

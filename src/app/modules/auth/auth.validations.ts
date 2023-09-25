@@ -18,9 +18,12 @@ const create = z.object({
     role: z.enum([...role] as [string, ...string[]], {
       required_error: 'Role is required!',
     }),
-    contactNo: z.string({
-      required_error: 'Contact Number is required',
-    }).min(3).max(11),
+    contactNo: z
+      .string({
+        required_error: 'Contact Number is required',
+      })
+      .min(3)
+      .max(11),
     address: z.string().min(2).max(100),
     profileImg: z.string().optional(),
   }),
