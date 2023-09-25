@@ -5,7 +5,8 @@ import sendResponse from '../../../shared/sendResponse';
 import { OrderService } from './orders.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const { userId, orderedBooks } = req.body;
+  const { orderedBooks } = req.body;
+  const { id: userId } = req.user as { role: string; id: string };
   const result = await OrderService.insertIntoDB(userId, orderedBooks);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,

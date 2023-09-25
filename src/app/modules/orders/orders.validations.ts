@@ -9,9 +9,6 @@ const OrderedBookSchema = z.object({
 
 const create = z.object({
   body: z.object({
-    userId: z.string({
-      required_error: 'User Id is required',
-    }),
     orderedBooks: z.array(OrderedBookSchema),
   }),
 });
