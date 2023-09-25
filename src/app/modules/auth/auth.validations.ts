@@ -18,9 +18,9 @@ const create = z.object({
     role: z.enum([...role] as [string, ...string[]], {
       required_error: 'Role is required!',
     }),
-    contactNo: z.string().refine(value => /^\+880-\d{10}$/.test(value), {
-      message: 'Contact number must be in the format +880-XXXXXXXXXX',
-    }),
+    contactNo: z.string({
+      required_error: 'Contact Number is required',
+    }).min(3).max(11),
     address: z.string().min(2).max(100),
     profileImg: z.string().optional(),
   }),
