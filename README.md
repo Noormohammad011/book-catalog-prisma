@@ -9,7 +9,7 @@
 #### User
 
 - api/v1/auth/signup (POST)
-- api/v1/auth/login (POST)
+- api/v1/auth/signin (POST)
 - api/v1/auth/logout (POST)
 - api/v1/auth/refresh-token (POST)
 - api/v1/users (GET)

@@ -11,17 +11,18 @@ datasource db {
 }
 
 model User {
-  id         String   @id @unique @default(uuid())
-  name       String
-  email      String   @unique
-  password   String
-  role       UserRole @default(customer)
-  contactNo  String   @unique @map("contact_no")
-  address    String
-  profileImg String?  @map("profile_img")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at")
-  orders     Order[]
+  id               String            @id @unique @default(uuid())
+  name             String
+  email            String            @unique
+  password         String
+  role             UserRole          @default(customer)
+  contactNo        String            @unique @map("contact_no")
+  address          String
+  profileImg       String?           @map("profile_img")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @default(now()) @updatedAt @map("updated_at")
+  orders           Order[]
+  ReviewAndRatings ReviewAndRating[]
 
   @@map("users")
 }
@@ -37,17 +38,18 @@ model Category {
 }
 
 model Book {
-  id              String        @id @unique @default(uuid())
-  title           String
-  author          String
-  price           Float
-  genre           String
-  publicationDate String        @map("publication_date")
-  categoryId      String        @map("category_id")
-  category        Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt       DateTime      @default(now()) @map("created_at")
-  updatedAt       DateTime      @default(now()) @updatedAt @map("updated_at")
-  orderedBooks    OrderedBook[]
+  id               String            @id @unique @default(uuid())
+  title            String
+  author           String
+  price            Float
+  genre            String
+  publicationDate  String            @map("publication_date")
+  categoryId       String            @map("category_id")
+  category         Category          @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @default(now()) @updatedAt @map("updated_at")
+  orderedBooks     OrderedBook[]
+  ReviewAndRatings ReviewAndRating[]
 
   @@map("books")
 }
@@ -75,6 +77,20 @@ model OrderedBook {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("ordered_books")
+}
+
+model ReviewAndRating {
+  id        String   @id @unique @default(uuid())
+  review    String
+  rating    Int      @default(1)
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  bookId    String   @map("book_id")
+  book      Book     @relation(fields: [bookId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("reviews_and_ratings")
 }
 
 enum OrderStatus {
